@@ -1,0 +1,29 @@
+h1 {
+    text-align: center;
+    color: white;
+    padding-bottom: 100px;
+}
+
+.jumbotron {
+    background-color: #37517e;
+    height: 10px;
+}
+
+.navbar-brand {
+    height: 500px;
+    width: 100px;
+}
+
+.btn {
+    background-color: #37517e;
+    color: white;
+    border-color: #37517e;
+}
+btn :hover {
+    background-color: #37517e;
+}
+
+#card-body {
+    display: inline-block;
+    
+}

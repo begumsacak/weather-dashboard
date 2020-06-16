@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Weather Dashboard</title>
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="style.css" </head>
+
+    <div class="jumbotron jumbotron-fluid">
+        <div class="container">
+            <h1 class="display-4">Weather Dashboard</h1>
+        </div>
+    </div>
+
+</head>
+
+<body>
+
+    <div class="container">
+        <div class="navbar-div col-md-4">
+            <nav class="navbar navbar-light bg-light" <a class="navbar-brand" href="#"> Search for a city </a>
+                <form class="form-inline my-2 my-lg-0">
+                    <input class="form-control mr-sm-2" type="search" placeholder="Search">
+                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                </form>
+            </nav>
+        </div>
+        <div class="container" <div class="card col-md-8" style="width: 18rem;">
+            <div class="card-body bg-light" id="card-body">
+                <p class="card-text" id="card-text">
+                </p>
+            </div>
+            <div class="col-md-8" id="uv-index"></div>
+        </div>
+        <!--5 day forecast-->
+        <div class="row">
+            <div class="col-sm-2">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Special title treatment</h5>
+                        <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-2">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Special title treatment</h5>
+                        <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-2">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Special title treatment</h5>
+                        <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-2">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Special title treatment</h5>
+                        <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-2">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Special title treatment</h5>
+                        <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script type="text/javascript">
+
+        var cardText = $("#card-text");
+        var cardBody = $("#card-body");
+
+        var populateInfo = function (list) {
+            console.log(list)
+            //Targets the Bootstrap card element
+
+            var temperature = $("<h5>").text("Temperature: " + list.main.temp);
+            var humidity = $("<p>").text("Humidity: " + list.main.humidity)
+            var windSpeed = $("<p>").text("Windspeed: " + list.wind.speed)
+            var uvIndexVar = uvIndex(list.coord.lat, list.coord.lon)
+            console.log(uvIndexVar)
+
+            cardText.append(temperature, humidity, windSpeed);
+            cardBody.append(cardText);
+        };
+
+        var searchCity = function (city) {
+            var queryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=d97355d58c6b5630b8875481727974dc";
+            console.log(queryURL)
+
+            $.ajax({
+                url: queryURL,
+                method: "GET"
+            }).then(function (response) {
+                populateInfo(response);
+            });
+        };
+        searchCity("Chicago")
+        // function for displaying the UV index by using a different
+        function uvIndex(lat, lon) {
+            var queryURL = "https://api.openweathermap.org/data/2.5/uvi?lat=" + lat + "&lon=" + lon + "&appid=d97355d58c6b5630b8875481727974dc";
+
+            $.ajax({
+                url: queryURL,
+                method: "GET"
+            }).then(function (response) {
+                var responseValue = $("<p>" + "UV Index: " + response.value + "</p>")
+                cardText.append(responseValue)
+                if (response.value >= 6) {
+                    $("#uv-index").append(responseValue).css("background-color", "red", "display", "block")
+                };
+
+            });
+
+        }
+
+        function forecast(daily) {
+
+            var queryURL = "https://api.openweathermap.org/data/2.5/forecast?" + city + "id=524901&APPID=d97355d58c6b5630b8875481727974dc"
+
+            console.log(queryURL)
+
+        }
+
+        //function searchButton {
+
+        //}
+
+
+
+
+
+
+
+        //var queryURL = "http://api.openweathermap.org/data/2.5/forecast?id=524901&APPID=d97355d58c6b5630b8875481727974dc"
+        //console.log(queryURL)
+
+
+
+
+
+    </script>
+</body>
+
+</html>
