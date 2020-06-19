@@ -19,23 +19,23 @@
 <body>
 
     <div class="container">
-        <div class="navbar-div col-md-4">
-            <nav class="navbar navbar-light bg-light" <a class="navbar-brand" href="#"> Search for a city </a>
-                <form class="form-inline my-2 my-lg-0">
-                    <input class="form-control mr-sm-2" type="search" placeholder="Search">
-                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-                </form>
-            </nav>
-        </div>
-        <div class="container" <div class="card col-md-8" style="width: 18rem;">
-            <div class="card-body bg-light" id="card-body">
+        <div class="row">
+            <div class="navbar-div col-md-4">
+                <nav class="navbar navbar-light bg-light" <a class="navbar-brand" href="#"> Search for a city </a>
+                    <form class="form-inline my-2 my-lg-0">
+                        <input class="form-control mr-sm-2" idtype="search" id="myInput" placeholder="Search">
+                        <button class="btn btn-outline-success my-2 my-sm-0" id="search-button" type="submit">Search</button>
+                    </form>
+                </nav>
+            </div>
+            <div class="card-body col-md-8 bg-light" id="card-body">
                 <p class="card-text" id="card-text">
                 </p>
+                <div class="col-md-8" id="uv-index"></div>
             </div>
-            <div class="col-md-8" id="uv-index"></div>
         </div>
         <!--5 day forecast-->
-        <div class="row">
+        <div class="row" id="forecast-cards">
             <div class="col-sm-2">
                 <div class="card">
                     <div class="card-body">
@@ -76,7 +76,6 @@
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
 
@@ -85,33 +84,43 @@
 
         var cardText = $("#card-text");
         var cardBody = $("#card-body");
+        //It makes it a global variable
+        var input;
+        console.log(input)
+        
 
         var populateInfo = function (list) {
             console.log(list)
             //Targets the Bootstrap card element
 
-            var temperature = $("<h5>").text("Temperature: " + list.main.temp);
+            var city = $("<h5>").text(list.name);
+            var temperature = $("<p>").text("Temperature: " + list.main.temp);
             var humidity = $("<p>").text("Humidity: " + list.main.humidity)
             var windSpeed = $("<p>").text("Windspeed: " + list.wind.speed)
             var uvIndexVar = uvIndex(list.coord.lat, list.coord.lon)
-            console.log(uvIndexVar)
+           console.log(city)
+       
 
-            cardText.append(temperature, humidity, windSpeed);
+            cardText.append(city, temperature, humidity, windSpeed);
             cardBody.append(cardText);
         };
 
-        var searchCity = function (city) {
-            var queryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=d97355d58c6b5630b8875481727974dc";
+        
+        var searchCity = function() {
+            var queryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + input + "&appid=d97355d58c6b5630b8875481727974dc";
             console.log(queryURL)
-
+            
             $.ajax({
                 url: queryURL,
                 method: "GET"
             }).then(function (response) {
                 populateInfo(response);
+            }).catch(function(error){
+                console.log(error)
             });
         };
-        searchCity("Chicago")
+
+        
         // function for displaying the UV index by using a different
         function uvIndex(lat, lon) {
             var queryURL = "https://api.openweathermap.org/data/2.5/uvi?lat=" + lat + "&lon=" + lon + "&appid=d97355d58c6b5630b8875481727974dc";
@@ -123,20 +132,28 @@
                 var responseValue = $("<p>" + "UV Index: " + response.value + "</p>")
                 cardText.append(responseValue)
                 if (response.value >= 6) {
-                    $("#uv-index").append(responseValue).css("background-color", "red", "display", "block")
+                    $("#uv-index").append(responseValue).css("background-color", "red")
                 };
 
             });
 
         }
 
-        function forecast(daily) {
+       // function forecast(daily) {
+        
+        //    var queryURL = "https://api.openweathermap.org/data/2.5/forecast?q=" + city + "&appid=d97355d58c6b5630b8875481727974dc";
 
-            var queryURL = "https://api.openweathermap.org/data/2.5/forecast?" + city + "id=524901&APPID=d97355d58c6b5630b8875481727974dc"
+        //    console.log(queryURL)
 
-            console.log(queryURL)
+       // }
 
-        }
+        $("#search-button").click(function(event) {
+            event.preventDefault();
+            input = $("#myInput").val();
+            console.log(input)
+            searchCity(input)
+        })
+       
 
         //function searchButton {
 
@@ -153,9 +170,7 @@
 
 
 
-
-
-    </script>
+</script>
 </body>
 
 </html>

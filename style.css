@@ -25,5 +25,16 @@ btn :hover {
 
 #card-body {
     display: inline-block;
+    border: none;
     
+};
+
+#uv-index {
+    flex: none;
+    max-width: 5%;
+};
+
+#forecast-cards {
+    padding-top: 50px;
+    position: absolute;
 }
