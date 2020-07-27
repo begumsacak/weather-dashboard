@@ -24,103 +24,75 @@
                 <nav class="navbar navbar-light bg-light" <a class="navbar-brand" href="#"> Search for a city </a>
                     <form class="form-inline my-2 my-lg-0">
                         <input class="form-control mr-sm-2" idtype="search" id="myInput" placeholder="Search">
-                        <button class="btn btn-outline-success my-2 my-sm-0" id="search-button" type="submit">Search</button>
+                        <button class="btn btn-outline-success my-2 my-sm-0" id="search-button"
+                            type="submit">Search</button>
                     </form>
                 </nav>
             </div>
+            <!--Weather-->
             <div class="card-body col-md-8 bg-light" id="card-body">
                 <p class="card-text" id="card-text">
                 </p>
                 <div class="col-md-8" id="uv-index"></div>
             </div>
         </div>
-        <!--5 day forecast-->
-        <div class="row" id="forecast-cards">
-            <div class="col-sm-2">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">Special title treatment</h5>
-                        <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-2">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">Special title treatment</h5>
-                        <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-2">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">Special title treatment</h5>
-                        <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-2">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">Special title treatment</h5>
-                        <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-2">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">Special title treatment</h5>
-                        <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
     </div>
+    <br>
+    <br>
+    <br>
+    <br>
+    <!--5 day forecast-->
+    <div class="forecast-div row">
+    
+    </div>
+
+
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script type="text/javascript">
 
         var cardText = $("#card-text");
         var cardBody = $("#card-body");
+        var card1 = $("#card-1");
         //It makes it a global variable
         var input;
-        console.log(input)
-        
+
 
         var populateInfo = function (list) {
             console.log(list)
             //Targets the Bootstrap card element
-
+            cardText.empty()
             var city = $("<h5>").text(list.name);
             var temperature = $("<p>").text("Temperature: " + list.main.temp);
             var humidity = $("<p>").text("Humidity: " + list.main.humidity)
             var windSpeed = $("<p>").text("Windspeed: " + list.wind.speed)
-            var uvIndexVar = uvIndex(list.coord.lat, list.coord.lon)
-           console.log(city)
-       
+            var uvLine = $("<p>").addClass("uvForecast")
+            console.log(city)
 
-            cardText.append(city, temperature, humidity, windSpeed);
+            cardText.append(city, temperature, humidity, windSpeed, uvLine);
             cardBody.append(cardText);
+            //append after cardText is appended
+            var uvIndexVar = uvIndex(list.coord.lat, list.coord.lon)
+            var dailyForecast = forecast(list.coord.lat, list.coord.lon)
         };
 
-        
-        var searchCity = function() {
-            var queryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + input + "&appid=d97355d58c6b5630b8875481727974dc";
+
+        var searchCity = function () {
+            var queryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + input + "&units=metric" + "&appid=d97355d58c6b5630b8875481727974dc";
             console.log(queryURL)
-            
+
             $.ajax({
                 url: queryURL,
                 method: "GET"
             }).then(function (response) {
                 populateInfo(response);
-            }).catch(function(error){
+            }).catch(function (error) {
                 console.log(error)
             });
+
         };
 
-        
+
         // function for displaying the UV index by using a different
         function uvIndex(lat, lon) {
             var queryURL = "https://api.openweathermap.org/data/2.5/uvi?lat=" + lat + "&lon=" + lon + "&appid=d97355d58c6b5630b8875481727974dc";
@@ -129,8 +101,9 @@
                 url: queryURL,
                 method: "GET"
             }).then(function (response) {
+                var uvForecast = $(".uvForecast")
                 var responseValue = $("<p>" + "UV Index: " + response.value + "</p>")
-                cardText.append(responseValue)
+                uvForecast.text(response.value)
                 if (response.value >= 6) {
                     $("#uv-index").append(responseValue).css("background-color", "red")
                 };
@@ -139,21 +112,65 @@
 
         }
 
-       // function forecast(daily) {
-        
-        //    var queryURL = "https://api.openweathermap.org/data/2.5/forecast?q=" + city + "&appid=d97355d58c6b5630b8875481727974dc";
+        function forecast(lat, lon) {
+            var queryURL = "https://api.openweathermap.org/data/2.5/onecall?lat=" + lat + "&lon=" + lon + "&units=metric" + "&exclude=hourly,minutely" + "&appid=d97355d58c6b5630b8875481727974dc"
+            console.log(queryURL)
 
-        //    console.log(queryURL)
 
-       // }
 
-        $("#search-button").click(function(event) {
+            $.ajax({
+                url: queryURL,
+                method: "GET"
+            }).then(function (response) {
+                console.log(response)
+                for (i = 0; i < 5; i++) {
+                    var today = response.daily[i]
+                    console.log(today)
+                    console.log(today.weather[0].icon)
+                    //unix to regular time and day
+                    var date = new Date(today.dt * 1000).toDateString();
+                    console.log(today.dt)
+
+                    var todayCard = `<div class="col-sm-2">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h5 class="card-title"> ${date} </h5>
+                                        <img src ="http://openweathermap.org/img/w/${today.weather[0].icon}.png"
+                                        <p class="card-text"> Temperature ${today.temp.day}</p>
+                                        <p> Humidity: ${today.humidity}</p>
+                                    </div>
+                                </div>
+                            </div>`
+                        $(".forecast-div").append(todayCard)
+
+
+
+
+
+                }
+            });
+        }
+
+
+
+        //         //Current day
+        //         for (i = 0; i < response.list.length; i += 7) {
+        //             var today = response.list[i]
+        //             //vartodayText = $("<p>" + today.main.dt_text + today.main.temp + today.main.humidity + "</p>").css ({"background-color": "yellow", "font-size": "200%"})
+        //             console.log(today)
+
+        //         };
+
+
+
+        // 
+        $("#search-button").click(function (event) {
             event.preventDefault();
             input = $("#myInput").val();
             console.log(input)
-            searchCity(input)
-        })
-       
+            searchCity()
+        });
+
 
         //function searchButton {
 
@@ -170,7 +187,7 @@
 
 
 
-</script>
+    </script>
 </body>
 
 </html>

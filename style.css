@@ -27,7 +27,7 @@ btn :hover {
     display: inline-block;
     border: none;
     
-};
+}
 
 #uv-index {
     flex: none;
@@ -36,5 +36,5 @@ btn :hover {
 
 #forecast-cards {
     padding-top: 50px;
-    position: absolute;
+    display: inline-block;
 }
