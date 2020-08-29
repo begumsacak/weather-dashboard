@@ -4,9 +4,20 @@ h1 {
     padding-bottom: 100px;
 }
 
+#weather-dashboard-title {
+    font-family: 'Merriweather Sans', sans-serif;
+    color: #37517e
+}
+
+#weather-image {
+    height: 100px;
+    width: 100px;
+}
+
 .jumbotron {
-    background-color: #37517e;
-    height: 10px;
+        background-image: url('https://sa1s3optim.patientpop.com/assets/images/provider/photos/2138869.jpg');
+        background-size: cover;
+        height: 50%;}
 }
 
 .navbar-brand {
@@ -19,8 +30,12 @@ h1 {
     color: white;
     border-color: #37517e;
 }
-btn :hover {
-    background-color: #37517e;
+
+.btn-outline-success {
+    color: #37517e;
+    background-color: transparent;
+    background-image: none;
+    border-color:#37517e;
 }
 
 #card-body {
