@@ -28,6 +28,9 @@
                             type="submit">Search</button>
                     </form>
                 </nav>
+            <ul class="past-searches">
+
+            </ul>
             </div>
             <!--Weather-->
             <div class="card-body col-md-8 bg-light" id="card-body">
@@ -155,14 +158,30 @@
         }
 
 
-
-        // 
         $("#search-button").click(function (event) {
             event.preventDefault();
             input = $("#myInput").val();
             console.log(input)
+            // first, get the cities
+            //json parse the cities
+            var cities = JSON.parse(localStorage.getItem("searched cities")) || []
+            
+            //take our city and put it into the array of cities
+            cities.push(input)
+            // json.stringify (turning into a string) and set it in the local storage
+            localStorage.setItem("searched cities", JSON.stringify(cities))
+
             searchCity()
+            $(".past-searches").append("<li>" + input + "</li>")
         });
+
+        var cities = JSON.parse(localStorage.getItem("searched cities")) || []
+        console.log(cities)
+        for (var i=0; i< cities.length; i++) {
+            cities[i]
+            $(".past-searches").append("<li>" + cities[i] + "</li>")
+        }
+        
 
 
 
