@@ -19,7 +19,7 @@ var populateInfo = function (list) {
     console.log(city)
 
     cardText.append(city, temperature, humidity, windSpeed, uvLine);
-    cardBody.append(cardText);
+    cardBody.css("background-color", "#f8f9fa").append(cardText);
     //append after cardText is appended
     var uvIndexVar = uvIndex(list.coord.lat, list.coord.lon)
     var dailyForecast = forecast(list.coord.lat, list.coord.lon)
@@ -114,13 +114,14 @@ $("#search-button").click(function (event) {
     localStorage.setItem("searched cities", JSON.stringify(cities))
 
     searchCity()
-    $(".past-searches").append("<li>" + input + "</li>")
+    $(".past-searches").append ('<button class="button">' + input + '</button><br>')
 });
 
 var cities = JSON.parse(localStorage.getItem("searched cities")) || []
 console.log(cities)
 for (var i=0; i< cities.length; i++) {
     cities[i]
-    $(".past-searches").append("<li>" + cities[i] + "</li>")
+    $(".past-searches").append('<button class="button">' + cities[i] + '</button><br>');
+    
 }
 

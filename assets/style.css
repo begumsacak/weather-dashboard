@@ -25,6 +25,14 @@ h1 {
     width: 100px;
 }
 
+.button {
+    border: none;
+    padding: none;
+    background-color: #0BB5FF;  
+    color: rgb(253, 253, 253);
+    font-size: 18px;
+}
+
 .btn {
     background-color: #37517e;
     color: white;
