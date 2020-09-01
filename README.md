@@ -3,4 +3,4 @@ A weather app built with [OpenWeather API](https://openweathermap.org/api) that 
 
 https://github.com/begumsacak/weather-dashboard
 
-![Screenshot from the app](img src="assets/weather-dashboard.png)
+![weather dashboard](https://user-images.githubusercontent.com/63175082/91792957-6d75f180-ebdc-11ea-9ab9-9d513a7e1907.png)
