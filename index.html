@@ -8,41 +8,38 @@
         href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.min.css" />
     <link href="https://fonts.googleapis.com/css2?family=Merriweather+Sans:wght@300&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="assets/style.css">
-
 </head>
 
 <body>
-    <script src="assets/script.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
     <div class="jumbotron jumbotron-fluid mt-3">
         <div class="container">
             <h1 class="display-4 text-center" id="weather-dashboard-title">Weather Dashboard</h1>
         </div>
     </div>
-    <main class="container">
+
+    <div class="container">
         <div class="row">
             <div class="navbar-div col-md-4">
                 <nav class="navbar navbar-light bg-light" <a class="navbar-brand" href="#"> Search for a city </a>
                     <form class="form-inline my-2 my-lg-0">
-                        <input class="form-control mr-sm-2" type="search" id="myInput" placeholder="Search">
+                        <input class="form-control mr-sm-2" idtype="search" id="myInput" placeholder="Search">
                         <button class="btn btn-outline-success my-2 my-sm-0" id="search-button"
                             type="submit">Search</button>
                     </form>
                 </nav>
-                <ul class="past-searches">
-                    <!--Past searches will go here through local storage-->
-                </ul>
+            <ul class="past-searches">
+
+            </ul>
             </div>
-            <!--Weather card-->
+            <!--Weather-->
             <div class="card-body col-md-8 bg-light" id="card-body">
                 <p class="card-text" id="card-text">
-                    <!--Card text will go here-->
                 </p>
                 <div class="col-md-8" id="uv-index"></div>
             </div>
         </div>
-    </main>
+    </div>
     <br>
     <br>
     <br>
@@ -50,12 +47,22 @@
     <!--5 day forecast-->
     <div class="container col-sm-12">
         <div class="forecast-div row">
-            <!--5-day forecast will go here-->
+
         </div>
     </div>
 
 
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="assets/script.js"></script>
+    <script type="text/javascript">
   
+
+       
+
+
+
+    </script>
 </body>
 
 </html>

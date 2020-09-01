@@ -1,10 +1,9 @@
-
 var cardText = $("#card-text");
 var cardBody = $("#card-body");
 var card1 = $("#card-1");
 var uvIndexDiv = $("#uv-index")
 var forecastDiv = $(".forecast-div")
-//input as a global variable (what user enters in the search area)
+//It makes it a global variable
 var input;
 
 
@@ -28,8 +27,7 @@ var populateInfo = function (list) {
 
 
 var searchCity = function () {
-    var queryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + input + "&units=metric" +
-        "&appid=d97355d58c6b5630b8875481727974dc";
+    var queryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + input + "&units=metric" + "&appid=d97355d58c6b5630b8875481727974dc";
     console.log(queryURL)
 
     $.ajax({
@@ -46,8 +44,7 @@ var searchCity = function () {
 
 // function for displaying the UV index by using a different
 function uvIndex(lat, lon) {
-    var queryURL = "https://api.openweathermap.org/data/2.5/uvi?lat=" + lat + "&lon=" + lon +
-        "&appid=d97355d58c6b5630b8875481727974dc";
+    var queryURL = "https://api.openweathermap.org/data/2.5/uvi?lat=" + lat + "&lon=" + lon + "&appid=d97355d58c6b5630b8875481727974dc";
 
     $.ajax({
         url: queryURL,
@@ -55,7 +52,7 @@ function uvIndex(lat, lon) {
     }).then(function (response) {
         var uvForecast = $(".uvForecast")
         var span = $("<span>" + response.value + "</span>").css("background-color", "red")
-        var responseValue = $("<p> UV Index: </p >")
+        var responseValue = $("<p>  UV Index: </p>")
         responseValue.append(span)
         uvForecast.text(response.value)
         if (response.value >= 6) {
@@ -67,9 +64,10 @@ function uvIndex(lat, lon) {
 }
 
 function forecast(lat, lon) {
-    var queryURL = "https://api.openweathermap.org/data/2.5/onecall?lat=" + lat + "&lon=" + lon + "&units=metric" +
-        "&exclude=hourly,minutely" + "&appid=d97355d58c6b5630b8875481727974dc"
+    var queryURL = "https://api.openweathermap.org/data/2.5/onecall?lat=" + lat + "&lon=" + lon + "&units=metric" + "&exclude=hourly,minutely" + "&appid=d97355d58c6b5630b8875481727974dc"
     console.log(queryURL)
+
+
 
     $.ajax({
         url: queryURL,
@@ -79,30 +77,28 @@ function forecast(lat, lon) {
         forecastDiv.empty()
         for (i = 0; i < 5; i++) {
             var today = response.daily[i]
-            //unix to regular time and day var date=new Date(today.dt * 1000).toDateString(); console.log(today.dt) var
-            todayCard = `<div class="col-sm-2">
-    <div class="card">
-        <div class="card-body" style="background-color: #0BB5FF;">
-            <h5 class="card-title" style="color:white;"> ${date} </h5>
-            <img src="http://openweathermap.org/img/w/${today.weather[0].icon}.png" <p class="card-text">
-            Temperature ${today.temp.day}</p>
-            <p> Humidity: ${today.humidity}</p>
-        </div>
-    </div>
-    </div>`
+            console.log(today)
+            console.log(today.weather[0].icon)
+            //unix to regular time and day
+            var date = new Date(today.dt * 1000).toDateString();
+            console.log(today.dt)
+
+            var todayCard = `<div class="col-sm-2">
+                        <div class="card">
+                            <div class="card-body" style="background-color: #0BB5FF;">
+                                <h5 class="card-title" style="color:white;"> ${date} </h5>
+                                <img src ="http://openweathermap.org/img/w/${today.weather[0].icon}.png"
+                                <p class="card-text"> Temperature ${today.temp.day}</p>
+                                <p> Humidity: ${today.humidity}</p>
+                            </div>
+                        </div>
+                    </div>`
             $(".forecast-div").append(todayCard)
 
         }
     });
 }
 
-//// Adding data
-// const cities = ['Chicago', 'Milwaukee', 'Miami']
-// localStorage.setItem('test', JSON.stringify(cities))
-
-// Getting data
-// const savedCities = localStorage.getItem('test')
-// console.log(JSON.parse(savedCities))
 
 $("#search-button").click(function (event) {
     event.preventDefault();
@@ -111,7 +107,7 @@ $("#search-button").click(function (event) {
     // first, get the cities
     //json parse the cities
     var cities = JSON.parse(localStorage.getItem("searched cities")) || []
-
+    
     //take our city and put it into the array of cities
     cities.push(input)
     // json.stringify (turning into a string) and set it in the local storage
@@ -123,7 +119,8 @@ $("#search-button").click(function (event) {
 
 var cities = JSON.parse(localStorage.getItem("searched cities")) || []
 console.log(cities)
-for (var i = 0; i < cities.length; i++) {
+for (var i=0; i< cities.length; i++) {
+    cities[i]
     $(".past-searches").append("<li>" + cities[i] + "</li>")
 }
 
